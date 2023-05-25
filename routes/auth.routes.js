@@ -2,12 +2,12 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 
-app.get(
+router.get(
   '/google',
   passport.authenticate('google', { scope: ['email', 'profile'] })
 );
 
-app.get(
+router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/user/no-permission' }),
   (req, res) => {

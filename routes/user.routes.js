@@ -1,12 +1,28 @@
 const express = require('express');
 const router = express.Router;
 
-app.get('/logged', (req, res) => {
+const isUserLogged = (req, res, next) => {
+  if (!req.user) {
+    res.redirect('/no-permission');
+  } else {
+    next();
+  }
+};
+
+router.get('/logged', isUserLogged, (req, res) => {
   res.render('logged');
 });
 
-app.get('/no-permission', (req, res) => {
+router.get('/no-permission', (req, res) => {
   res.render('noPermission');
+});
+
+router.get('/profile', isUserLogged, (req, res) => {
+  res.render('profile');
+});
+
+router.get('/profile/settings', isUserLogged, (req, res) => {
+  res.render('profileSettings');
 });
 
 module.exports = router;
