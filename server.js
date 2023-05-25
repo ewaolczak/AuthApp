@@ -8,6 +8,7 @@ const session = require('express-session');
 
 const app = express();
 
+// configure passport provider options
 passport.use(
   new GoogleStrategy(
     {
@@ -49,6 +50,19 @@ app.use(passport.session());
 app.get('/', (req, res) => {
   res.render('index');
 });
+
+app.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['email', 'profile'] })
+);
+
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/user/no-permission' }),
+  (req, res) => {
+    res.redirect('/user/logged');
+  }
+);
 
 app.get('/user/logged', (req, res) => {
   res.render('logged');
