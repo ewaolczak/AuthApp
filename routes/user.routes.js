@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router;
+const router = express.Router();
 
 const isUserLogged = (req, res, next) => {
   if (!req.user) {
@@ -10,7 +10,11 @@ const isUserLogged = (req, res, next) => {
 };
 
 router.get('/logged', isUserLogged, (req, res) => {
-  res.render('logged');
+  res.render('logged', {
+    user: req.user.displayName,
+    avatar: req.user.photos[0].value
+  });
+  console.log(req.user);
 });
 
 router.get('/no-permission', (req, res) => {
