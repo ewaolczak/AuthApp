@@ -10,7 +10,11 @@ const isUserLogged = (req, res, next) => {
 };
 
 router.get('/logged', isUserLogged, (req, res) => {
-  res.render('logged');
+  res.render('logged', {
+    user: req.user.displayName,
+    avatar: req.user.photos[0].value
+  });
+  console.log(req.user);
 });
 
 router.get('/no-permission', (req, res) => {
@@ -23,10 +27,6 @@ router.get('/profile', isUserLogged, (req, res) => {
 
 router.get('/profile/settings', isUserLogged, (req, res) => {
   res.render('profileSettings');
-});
-
-router.get('/logout', (req, res) => {
-  res.render('logout');
 });
 
 module.exports = router;
