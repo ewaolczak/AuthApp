@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router;
+const router = express.Router();
 
 const isUserLogged = (req, res, next) => {
   if (!req.user) {
@@ -23,6 +23,10 @@ router.get('/profile', isUserLogged, (req, res) => {
 
 router.get('/profile/settings', isUserLogged, (req, res) => {
   res.render('profileSettings');
+});
+
+router.get('/logout', (req, res) => {
+  res.render('logout');
 });
 
 module.exports = router;
