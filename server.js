@@ -32,8 +32,8 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.use('/api', require('./routes/adverts.routes'));
 app.use('/auth', require('./routes/auth.routes'));
-app.use('/user', require('./routes/user.routes'));
 
 app.use('/', (req, res) => {
   res.status(404).render('notFound');
